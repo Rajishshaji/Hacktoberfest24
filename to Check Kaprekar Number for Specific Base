@@ -1,0 +1,58 @@
+#include <iostream>
+#include <cmath>
+#include <string>
+using namespace std;
+
+// Function to convert a number to a specific base
+string convertToBase(int num, int base) {
+    string result = "";
+    while (num > 0) {
+        int remainder = num % base;
+        result = to_string(remainder) + result;
+        num /= base;
+    }
+    return result.empty() ? "0" : result;
+}
+
+// Function to check if a number is Kaprekar in a given base
+bool isKaprekar(int n, int base) {
+    long long square = (long long)n * n;
+    
+    // Convert square to the specified base
+    string squareInBase = convertToBase(square, base);
+    
+    int len = squareInBase.length();
+    
+    // Try splitting the squared result into two parts
+    for (int i = 1; i < len; ++i) {
+        string leftPart = squareInBase.substr(0, i);
+        string rightPart = squareInBase.substr(i);
+
+        // Convert both parts back to integer
+        int leftNum = leftPart.empty() ? 0 : stoi(leftPart, nullptr, base);
+        int rightNum = rightPart.empty() ? 0 : stoi(rightPart, nullptr, base);
+
+        // Check if the sum equals the original number
+        if (leftNum + rightNum == n) {
+            return true;
+        }
+    }
+    
+    return false;
+}
+
+int main() {
+    int n, base;
+    cout << "Enter the number: ";
+    cin >> n;
+    cout << "Enter the base: ";
+    cin >> base;
+    
+    if (isKaprekar(n, base)) {
+        cout << n << " is a Kaprekar number in base " << base << endl;
+    } else {
+        cout << n << " is NOT a Kaprekar number in base " << base << endl;
+    }
+    
+    return 0;
+}
