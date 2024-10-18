@@ -3,6 +3,7 @@
 #include <string>
 using namespace std;
 
+
 // Function to convert a number to a specific base
 string convertToBase(int num, int base) {
     string result = "";
